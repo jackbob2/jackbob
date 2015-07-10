@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+	<parser>
+		<target>documentation</target>
+	</parser>
+	<transformer>
+		<target>documentation</target>
+	</transformer>
+	<transformations>
+		<template name="clean" />
+	</transformations>
+	<files>
+		<directory>.</directory>
+		<ignore>documentation/*</ignore>
+		<ignore>vendor/*</ignore>
+		<ignore>phpDocumentor/*</ignore>
+	</files>
+</phpdoc>

@@ -1,0 +1,53 @@
+# Documentation microframework jackbob v0.1
+La documentation des classes au format HTML se trouve dans /jackbob/documentation/classes/
+
+1. Prérequis:
+PHP >= 5.3
+Module rewrite activé pour apache
+
+2. Setup / Installation:
+- Copiez ce repertoire dans votre repertoire www
+- Le fichier de configuration se trouve dans application/settings.ini
+- on ne doit jamais toucher aux autres repertoires et fichiers à part le repertoire application
+- normalement si tout fonctionne, vous aurez une message affirmant que ça fonctionne si vous tapez: http://localhost/jackbob/
+
+3. Utilisation:
+-configuration: le fichier de configuration se trouve dans /libraries/settings.ini
+
+-Routing
+Ex: http://localhost/jackbob/user/add
+controller = user, action=add
+
+autre exemple: http://localhost/jackbob/user/edit/2
+controller = user, action=add, id=2, on edite un user ayant l'id 2
+pour récupérer l'id dans un controller, on commence par l'index 0 du tableau: $this -> urlvalues[0], s'il y a d'autres params, 1,2,3 etc
+
+-Controller:
+Vous devez créer votre controller dans le repertoire application/controller/ et il doit étendre la class abstraite BaseController
+Pour l'exemple ci-dessus, on doit avoir la methode addAction dans UserController
+Pour passer des variables à la vue, on utilise dans le controller $this -> viewVars = array('nom' => 'jacky',....) ;
+La classe Controller possède déjà la methode getEntityManager pour récupérer l'entityManager permettant de communiquer avec doctrine
+Pour avoir le repository dans un controller, exemple: $entityManager -> getRepository('Entity\Personne')
+doc de doctrine: http://doctrine-orm.readthedocs.org/en/latest/
+
+-View:
+Tous le vues se trouvent dans le repertoire application/view/ avec le nom de chaque controller comme nom de la repertoire et nom de l'action comme nom du fichier
+Ex: /view/User/add.php
+dans la vue on récupère les variables comme $nom
+
+-Model et Mapping:
+Pour l'ORM, on utilse doctrine2
+Tous les entités devront normalement se trouver dans application/models/Entity et donc avec le namespace Entity
+
+
+e.g
+J'ai ajouté une petite gestion de personne comme exemple, les fonctionnalités sont accessibles via:
+- liste de tous les personnes: jackbob/personne/
+- ajouter une personne (sans formulaire): jackbob/personne/add
+- supprimer une personne: jackbob/personne/delete/2(id de la personne directement)
+- bien sûr la table "personnes" à utiliser sera créée via la commande doctrine(./vendor/bin/doctrine-module orm:schema-tool:create)
+L'exemple est très très simple mais l'idée c'est juste pour vous montrer l'utilisation du microframework jackbob
+Pour voir les fichiers:
+-controller: application/controller/PersonneController.php
+-entity(modele): application/models/Entity/Personne.php
+-vue:application/views/Personne/index.php
